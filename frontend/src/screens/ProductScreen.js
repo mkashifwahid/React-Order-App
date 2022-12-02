@@ -11,4 +11,4 @@ function ProductScreen() {
   );
 }
 
-export  default ProductScreen;
+export default ProductScreen;
