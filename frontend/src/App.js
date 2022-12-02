@@ -13,7 +13,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
-            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/product/:itemId" element={<ProductScreen />} />
           </Routes>
         </main>
       </div>

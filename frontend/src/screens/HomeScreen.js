@@ -7,14 +7,14 @@ function HomeScreen() {
       <h1> List of Products </h1>
       <div className="products">
         {data.products.map((product) => (
-          <div className="product" key={product.id}>
+          <div className="product" key={product.itemId}>
             <div className="product-info">
-              <Link to={`/product/${product.id}`}>
-                <p>{product.name}</p>
+              <Link to={`/product/${product.itemId}`}>
+                <p>{product.itemCode}-{product.itemDesc}</p>
               </Link>
 
               <p>
-                <strong>Rs. {product.price}</strong>
+                <strong>Rs. {product.itemTPRate}</strong>
               </p>
               <button>Add to Cart</button>
             </div>

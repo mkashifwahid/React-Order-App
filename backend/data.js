@@ -2,7 +2,7 @@ const data = {
   products: [
     {
       itemId: '11',
-      itemCode:'Code-11',
+      itemCode:'11',
       itemDesc: 'Product - 11',
       itemGroup: 'Group-11',
       itemSupp: 'Supp-11',
@@ -15,7 +15,7 @@ const data = {
     },
     {
       itemId: '12',
-      itemCode:'Code-12',
+      itemCode:'',
       itemDesc: 'Product - 12',
       itemGroup: '',
       itemSupp: '',
@@ -28,7 +28,7 @@ const data = {
     },
     {
       itemId: '13',
-      itemCode:'Code-13',
+      itemCode:'',
       itemDesc: 'Product - 13',
       itemGroup: '',
       itemSupp: '',

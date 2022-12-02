@@ -2,12 +2,13 @@ import { useParams } from 'react-router-dom';
 
 function ProductScreen() {
   const params = useParams();
-  const { id } = params;
+  //test
+  const { itemId } = params;
   return (
     <div>
-      <h1>{id}</h1>
+      <h1>{itemId}</h1>
     </div>
   );
 }
 
-export default ProductScreen;
+export  default ProductScreen;
