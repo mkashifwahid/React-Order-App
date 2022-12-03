@@ -1,14 +1,21 @@
 import { useEffect, useReducer } from 'react';
-import { Link } from 'react-router-dom';
+
 //import data from '../data';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from '../component/Product';
+import { Helmet } from 'react-helmet-async';
+import LoadingBox from '../component/LoadingBox';
+import MessageBox from '../component/MessageBox';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, products: action.payload, loading: false };
+      return { ...state, loading: false, products: action.payload };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -40,24 +47,24 @@ function HomeScreen() {
   }, []);
   return (
     <div>
-      <h1> List of Products </h1>
+      <Helmet>
+        <title>Booker App</title>
+      </Helmet>
+      <h1>List of Products</h1>
       <div className="products">
-        {products.map((product) => (
-          <div className="product" key={product.itemId}>
-            <div className="product-info">
-              <Link to={`/product/${product.itemId}`}>
-                <p>
-                  {product.itemCode}-{product.itemDesc}
-                </p>
-              </Link>
-
-              <p>
-                <strong>Rs. {product.itemTPRate}</strong>
-              </p>
-              <button>Add to Cart</button>
-            </div>
-          </div>
-        ))}
+        {loading ? (
+          <LoadingBox />
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>
+        ) : (
+          <Row>
+            {products.map((product) => (
+              <Col key={product.itemId} sm={12} md={12} lg={12}>
+                <Product product={product}></Product>
+              </Col>
+            ))}
+          </Row>
+        )}
       </div>
     </div>
   );
