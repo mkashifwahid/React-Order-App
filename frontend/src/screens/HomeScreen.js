@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 //import data from '../data';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
+
+
 const reducer = (state, action) => {
+  console.log('hi');
   switch (action.type) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
@@ -26,6 +29,7 @@ function HomeScreen() {
   //const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
+      console.log("hello world")
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const result = await axios.get('/api/products');
@@ -37,6 +41,7 @@ function HomeScreen() {
       //setProducts(result.data);
     };
     fetchData();
+  
   }, []);
   return (
     <div>
