@@ -4,7 +4,9 @@ export const Store = createContext();
 
 const initalState = {
   cart: {
-    cartItems: [],
+    cartItems: localStorage.getItem('cartItems') 
+    ? JSON.parse(localStorage.getItem('cartItems')) 
+    :[],
   },
 };
 
@@ -20,8 +22,13 @@ function reducer(state, action) {
             item.itemId === existItem.itemId ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
-
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state.cart, cart: { ...state.cart, cartItems } };
+    case 'CART_REMOVE_ITEM' : {
+      const cartItems = state.cart.cartItems.filter((item)=> item.itemId !== action.payload.itemId)
+    };
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    return { ...state, cart: { ...state.cart, cartItems } };
     default:
       return state;
   }

@@ -1,8 +1,14 @@
 import { useEffect, useReducer } from 'react';
-
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/AccordionCollapse'
+import MessageBox from '../component/MessageBox'
+import LoadingBox from '../component/LoadingBox'
+import Product from '../component/Product'
 //import data from '../data';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
+import { Helmet } from 'react-helmet-async';
+
 const reducer = (state, action) => {
   console.log('hi');
   switch (action.type) {
@@ -27,7 +33,6 @@ function HomeScreen() {
   //const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      console.log("hello world")
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const result = await axios.get('/api/products');
