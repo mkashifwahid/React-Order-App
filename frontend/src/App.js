@@ -1,14 +1,15 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
-import CartScreen from "./screens/CartScreen";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Badge from "react-bootstrap/Badge";
-import Container from "react-bootstrap/Container";
-import { LinkContainer } from "react-router-bootstrap";
-import { useContext } from "react";
-import { Store } from "./Store";
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Badge from 'react-bootstrap/Badge';
+import Container from 'react-bootstrap/Container';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useContext } from 'react';
+import { Store } from './Store';
+import SigninScreen from './screens/SigninScreen';
 //import './App.css';
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
                   Cart
                   {cart.cartItems.length > 0 && (
                     <Badge pill bg="danger">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity)}
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}
                 </Link>
@@ -43,7 +44,8 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:itemId" element={<ProductScreen />} />
-              <Route path="/cart/:itemId" element={<CartScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
+              <Route path="/signin" element={<SigninScreen />} />
             </Routes>
           </Container>
         </main>

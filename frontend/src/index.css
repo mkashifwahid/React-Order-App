@@ -43,3 +43,7 @@ main {
 .produt-info {
   padding: 1rem;
 }
+
+.small-container {
+  max-width: 600px;
+}

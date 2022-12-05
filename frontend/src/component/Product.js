@@ -1,9 +1,9 @@
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 //import axios from "axios";
-import { useContext } from "react";
-import { Store } from "../Store";
+import { useContext } from 'react';
+import { Store } from '../Store';
 
 function Product(props) {
   const { product } = props;
@@ -18,7 +18,7 @@ function Product(props) {
     //const {data} = await axios.get(`/api/products/${item.itemId}`)
 
     ctxDispatch({
-      type: "CART_ADD_ITEM",
+      type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     });
   };
