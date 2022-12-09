@@ -1,5 +1,7 @@
-import express from 'express';
+import express, { response } from 'express';
 import data from './data.js';
+import getProducts from './dbfiles/dbOperations.js';
+//import cros from 'çros';
 
 const app = express();
 
@@ -25,8 +27,12 @@ app.get('/api/products/:itemId', (req, res) => {
   }
 });
 
-const port = process.env.PORT || 5000;
+//const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(`serve at http://localhost:${port}`);
+// app.listen(port, () => {
+//   console.log(`serve at http://localhost:${port}`);
+// });
+
+getProducts().then((res) => {
+  console.log(res);
 });

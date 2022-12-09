@@ -22,6 +22,7 @@ function Product(props) {
       payload: { ...item, quantity },
     });
   };
+
   return (
     <Card>
       <Card.Body>
