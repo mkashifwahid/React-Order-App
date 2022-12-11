@@ -1,10 +1,10 @@
 import config from './dbConfig.js';
 import sql from 'mssql';
 
-export const getProducts = async () => {
+export default async function getProducts() {
   try {
     let pool = await sql.connect(config);
-    let products = pool.request().query('exec sp_GetItem');
+    let products =await pool.request().query('exec sp_GetItem');
     console.log(products);
     return products;
   } catch (error) {
@@ -23,3 +23,4 @@ export const createCart = async (Product) => {
     console.log(error);
   }
 };
+
