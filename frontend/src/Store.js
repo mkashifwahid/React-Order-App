@@ -15,18 +15,18 @@ function reducer(state, action) {
     case 'CART_ADD_ITEM':
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
-        (item) => item.itemId === newItem.itemId
+        (item) => item.Id === newItem.Id
       );
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-            item.itemId === existItem.itemId ? newItem : item
+            item.Id === existItem.Id ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state.cart, cart: { ...state.cart, cartItems } };
     case 'CART_REMOVE_ITEM': {
       const cartItems = state.cart.cartItems.filter(
-        (item) => item.itemId !== action.payload.itemId
+        (item) => item.Id !== action.payload.Id
       );
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };

@@ -11,16 +11,16 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 
-app.get('/api/products', async(req, res) => {
-  console.log('connect to server')
- const result = await getProducts();
- console.log('RESULT')
- console.log(result);
-  res.send(result);
-} ); 
+app.get('/api/products', async (req, res) => {
+  console.log('connect to server');
+  const result = await getProducts();
+  res.send(result.recordset);
+});
 
-app.get(`/api/products/itemId/:itemId`, (req, res) => {
-  const product = data.products.find((x) => x.itemId === req.params.itemId);
+app.get(`/api/products/Id/:Id`, async (req, res) => {
+  console.log('ye ');
+  const result = await getProducts();
+  const product = result.recordset.find((x) => x.Id === req.params.Id);
   if (product) {
     res.send(product);
   } else {
@@ -28,8 +28,9 @@ app.get(`/api/products/itemId/:itemId`, (req, res) => {
   }
 });
 
-app.get('/api/products/:itemId', (req, res) => {
-  const product = data.products.find((x) => x.itemId === req.params.itemId);
+app.get('/api/products/:Id', async (req, res) => {
+  const result = await getProducts();
+  const product = result.recordset.find((x) => x.Id === req.params.Id);
   if (product) {
     res.send(product);
   } else {
@@ -42,7 +43,3 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
 });
-
-
-let pr = new product(1, 'all in one');
-console.log(pr);

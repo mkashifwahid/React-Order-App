@@ -11,9 +11,9 @@ import LoadingBox from '../component/LoadingBox';
 import MessageBox from '../component/MessageBox';
 import { getError } from '../util';
 import { Store } from '../Store';
+import Product from '../component/Product';
 
 const reducer = (state, action) => {
-  console.log('hi');
   switch (action.type) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
@@ -30,7 +30,7 @@ function ProductScreen() {
   const navigate = useNavigate();
   const params = useParams();
   //test
-  const { itemId } = params;
+  const { Id } = params;
 
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
@@ -43,7 +43,7 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get(`/api/products/itemId/${itemId}`);
+        const result = await axios.get(`/api/products/Id/${Id}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
@@ -52,13 +52,13 @@ function ProductScreen() {
       //setProducts(result.data);
     };
     fetchData();
-  }, [itemId]);
+  }, [Id]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
 
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x) => x.itemId === product.itemId);
+    const existItem = cart.cartItems.find((x) => x.Id === product.Id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     // const {data} = await axios.get(`/api/product${product.itemId}`);
 
@@ -79,10 +79,31 @@ function ProductScreen() {
           <ListGroup>
             <ListGroup.Item>
               <Helmet>
-                <title>{product.itemDesc}</title>
+                <title>{product.ItemDesc}</title>
               </Helmet>
             </ListGroup.Item>
-            <ListGroup.Item>Price: Pkr {product.itemTPRate}</ListGroup.Item>
+            <ListGroup.Item>
+              <h3>{product.ItemDesc}</h3>
+              <Row>
+                <Col xs={4}>Company</Col>
+                <Col>{product.Cmp_Name}</Col>
+              </Row>
+              <Row>
+                <Col xs={4}>Group</Col>
+                <Col>{product.Group_Desc}</Col>
+              </Row>
+              <Row>
+                <Col xs={4}>Price</Col>
+                <Col className="number">{product.ItemRate}</Col>
+              </Row>
+              <Row>
+                <Col xs={4}>Discount</Col> <Col>{product.ItemDisc}%</Col>
+              </Row>
+              <Row>
+                <Col xs={4}>Sales Tax</Col>
+                <Col>{product.ItemStax}</Col>
+              </Row>
+            </ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -91,8 +112,8 @@ function ProductScreen() {
               <ListGroup>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Price:</Col>
-                    <Col>${product.itemTPRate}</Col>
+                    <Col>Price</Col>
+                    <Col>{product.ItemRate}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

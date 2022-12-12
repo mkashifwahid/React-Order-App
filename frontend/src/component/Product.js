@@ -13,7 +13,7 @@ function Product(props) {
   } = state;
 
   const addToCartHandler = async (item) => {
-    const existItem = cartItems.find((x) => x.itemId === product.itemId);
+    const existItem = cartItems.find((x) => x.Id === product.Id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     //const {data} = await axios.get(`/api/products/${item.itemId}`)
 
@@ -26,12 +26,15 @@ function Product(props) {
   return (
     <Card>
       <Card.Body>
-        <Link to={`/product/${product.itemId}`}>
+        <Link to={`/product/${product.Id}`}>
           <Card.Title>
-            {product.itemCode}-{product.itemDesc}
+            {product.Id} - {product.ItemDesc}
           </Card.Title>
         </Link>
-        <Card.Text>Rs. {product.itemTPRate}</Card.Text>
+        <Card.Text>Price : {product.ItemRate}</Card.Text>
+        <Card.Text>Disc % : {product.ItemDisc} %</Card.Text>
+        <Card.Text>S.Tax : {product.ItemSTax}</Card.Text>
+
         <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
       </Card.Body>
     </Card>

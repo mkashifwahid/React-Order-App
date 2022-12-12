@@ -1,16 +1,15 @@
 import { useEffect, useReducer } from 'react';
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/AccordionCollapse'
-import MessageBox from '../component/MessageBox'
-import LoadingBox from '../component/LoadingBox'
-import Product from '../component/Product'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/AccordionCollapse';
+import MessageBox from '../component/MessageBox';
+import LoadingBox from '../component/LoadingBox';
+import Product from '../component/Product';
 //import data from '../data';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
 import { Helmet } from 'react-helmet-async';
 
 const reducer = (state, action) => {
-  console.log('hi');
   switch (action.type) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
@@ -44,7 +43,6 @@ function HomeScreen() {
       //setProducts(result.data);
     };
     fetchData();
-  
   }, []);
   return (
     <div>
@@ -60,7 +58,7 @@ function HomeScreen() {
         ) : (
           <Row>
             {products.map((product) => (
-              <Col key={product.itemId} sm={12} md={12} lg={12}>
+              <Col key={product.Id} sm={12} md={12} lg={12}>
                 <Product product={product}></Product>
               </Col>
             ))}
