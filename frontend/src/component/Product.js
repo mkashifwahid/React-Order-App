@@ -1,5 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 //import axios from "axios";
 import { useContext } from 'react';
@@ -28,13 +30,34 @@ function Product(props) {
       <Card.Body>
         <Link to={`/product/${product.Id}`}>
           <Card.Title>
-            {product.Id} - {product.ItemDesc}
+           {product.ItemDesc}
           </Card.Title>
         </Link>
+        <Row>
         <Card.Text>Price : {product.ItemRate}</Card.Text>
+        </Row>
+        <Row>
         <Card.Text>Disc % : {product.ItemDisc} %</Card.Text>
+        </Row>
+        <Row>
         <Card.Text>S.Tax : {product.ItemSTax}</Card.Text>
-
+        </Row>
+        <Row>
+        <Col md={3}>
+                      <Button
+                        variant="light"
+//                        disabled={item.quantity === 1}
+                      >
+                        <i className="fas fa-minus-circle"></i>
+                      </Button>{' '}
+                      {/* <span>{item.quantity}</span>{' '} */}
+                      <Button
+                        variant="light"
+                      >
+                        <i className="fas fa-plus-circle"></i>
+                      </Button>
+                    </Col>
+        </Row>
         <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
       </Card.Body>
     </Card>
