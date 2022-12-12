@@ -52,12 +52,10 @@ export default function CartScreen() {
           ) : (
             <ListGroup>
               {cartItems.map((item) => (
-                <ListGroup.Item key={item.itemId}>
+                <ListGroup.Item key={item.Id}>
                   <Row className="align-items-center">
                     <Col md={4}>
-                      <Link to={`/product/${item.itemId}`}>
-                        {item.itemDesc}
-                      </Link>
+                      <Link to={`/product/${item.Id}`}>{item.ItemDesc}</Link>
                     </Col>
                     <Col md={3}>
                       <Button
@@ -79,7 +77,7 @@ export default function CartScreen() {
                         <i className="fas fa-plus-circle"></i>
                       </Button>
                     </Col>
-                    <Col md={3}>Rs. {item.itemTPRate}/-</Col>
+                    <Col md={3}>Rs. {item.ItemRate}/-</Col>
                     <Col md={2}>
                       <Button
                         onClick={() => removeItemHandler(item)}
@@ -105,7 +103,7 @@ export default function CartScreen() {
                     <h3>
                       Rs. :{' '}
                       {cartItems.reduce(
-                        (a, c) => a + c.itemTPRate * c.quantity,
+                        (a, c) => a + c.ItemRate * c.quantity,
                         0
                       )}
                       /-
