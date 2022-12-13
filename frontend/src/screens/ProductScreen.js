@@ -11,7 +11,6 @@ import LoadingBox from '../component/LoadingBox';
 import MessageBox from '../component/MessageBox';
 import { getError } from '../util';
 import { Store } from '../Store';
-import Product from '../component/Product';
 
 const reducer = (state, action) => {
   switch (action.type) {
