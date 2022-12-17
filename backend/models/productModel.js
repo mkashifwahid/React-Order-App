@@ -1,22 +1,28 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
-import product from '../dbfiles/productCart';
+// import product from '../dbfiles/productCart';
 const sequelize = new Sequelize('sqlite::memory:');
 
-const ProductSchema = sequelize.define('Product', {
-  Id: DataTypes.STRING,
-  ItemCode: DataTypes.STRING,
-  ItemDesc: DataTypes.STRING,
-  ItemUnit: DataTypes.STRING,
-  ItemRate: DataTypes.DECIMAL,
-  ItemDisc: DataTypes.DECIMAL,
-  ItemSTax: DataTypes.DECIMAL,
-  Grp_Desc: DataTypes.STRING,
-  Cmp_Name: DataTypes.STRING,
-});
+const ProductSchema = sequelize.define(
+  'Products',
+  {
+    Id: DataTypes.STRING,
+    ItemCode: DataTypes.STRING,
+    ItemDesc: DataTypes.STRING,
+    ItemUnit: DataTypes.STRING,
+    ItemRate: DataTypes.DECIMAL,
+    ItemDisc: DataTypes.DECIMAL,
+    ItemSTax: DataTypes.DECIMAL,
+    Grp_Desc: DataTypes.STRING,
+    Cmp_Name: DataTypes.STRING,
+  },
+  {
+    timestamps: false,
+  }
+);
 
-const Product = sequelize.models.ProductSchema;
+const Products = sequelize.model('Products', ProductSchema);
 
-export default Product;
+export default Products;
 
 //const Product = new Model('Product', ProductSchema);
 // const User = sequelize.define('User', {

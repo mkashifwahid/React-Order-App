@@ -1,19 +1,44 @@
 import express, { response } from 'express';
 import data from './data.js';
 import getProducts from './dbfiles/dbOperations.js';
-//import getProducts from './dbfiles/dbOperations.js';
 import product from './dbfiles/productCart.js';
-//import { createCart } from './dbfiles/dboperations.js';
 import cors from 'cors';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/ProductRoutes.js';
+//import Products from './models/productModel.js';
+import { DataTypes, Sequelize } from 'sequelize';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use('/api/seed', seedRouter);
-app.use('/api/Products', productRouter);
+//app.use('/api/seed', seedRouter);
+// app.use('/api/products', productRouter);
+
+app.get('/api/products', async (req, res) => {
+  const products = await getProducts();
+  res.send(products.recordset);
+});
+
+app.get(`/api/products/Id/:Id`, async (req, res) => {
+  console.log('ye ');
+  const result = await getProducts();
+  const product = result.find((x) => x.Id === req.params.Id);
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: 'Product not found' });
+  }
+});
+
+app.get('/api/products/:Id', async (req, res) => {
+  const product = await Product.find((x) => x.Id === req.params.Id);
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: 'Product not found' });
+  }
+});
 
 const port = process.env.PORT || 5000;
 

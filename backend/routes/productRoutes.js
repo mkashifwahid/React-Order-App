@@ -1,13 +1,14 @@
 import express from 'express';
 import Product from '../models/productModel.js';
+import getProducts from '../dbfiles/dboperations.js';
 
 const productRouter = express.Router();
 
 productRouter.get('/', async (req, res) => {
   //await Product.remove({});
-  const result = await getProducts();
-
-  const products = await Product.findAll();
+  const products = await getProducts();
+  console.log(products);
+  //const products = await Product.findAll();
   res.send({ products });
 });
 
