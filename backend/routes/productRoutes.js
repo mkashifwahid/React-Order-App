@@ -5,16 +5,17 @@ import getProducts from '../dbfiles/dboperations.js';
 const productRouter = express.Router();
 
 productRouter.get('/', async (req, res) => {
-  //await Product.remove({});
   const products = await getProducts();
-  console.log(products);
-  //const products = await Product.findAll();
-  res.send({ products });
+  res.send(products.recordset);
 });
 
 productRouter.get(`/Id/:Id`, async (req, res) => {
   //const product = Product.findOne(x) => x.Id === req.params.Id);
-  const product = await Product.findOne({ where: { Id: req.params.Id } });
+
+  const products = await getProducts();
+  console.log(products);
+  // const product = await products.recordset.findOne({ where: { Id: req.params.Id } });
+  const product = products.recordset.findOne((x) => x.Id === req.params.Id);
   if (product) {
     res.send(product);
   } else {
