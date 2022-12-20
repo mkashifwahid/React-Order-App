@@ -1,26 +1,20 @@
 import express from 'express';
-import getBookerUser from '../dbfiles/dboperations.js';
+import { getBookerUser } from '../dbfiles/dboperations.js';
 import { generateToken } from '../utils.js';
 import expressAsyncHandler from 'express-async-handler';
 
 const userRouter = express.Router();
-console.log('úsers');
 userRouter.post(
   '/signin',
   expressAsyncHandler(async (req, res) => {
-    const user = await getBookerUser('01');
-    //  console.log(users.recordset);
-    //    const user = users.findOne((x) => x.BookerCode === req.body.BookerCode);
+    const user = await getBookerUser(`${req.body.code}`);
 
     if (user) {
-      console.log(user);
-      console.log(user[0].BookerPassword, 'first');
-      console.log(req.body.BookerPassword, 'sec');
-      if (user.BookerPassword === req.body.BookerPassword) {
+      if (user.recordset[0].BookerPassword === req.body.password) {
         res.send({
-          code: user.BookerCode,
-          name: user.BookerName,
-          token: generateToken(user),
+          code: user.recordset[0].BookerCode,
+          name: user.recordset[0].BookerName,
+          token: generateToken(user.recordset),
         });
         return;
       }

@@ -1,6 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel.js';
-import getProducts from '../dbfiles/dbOperations.js';
+import { getProducts } from '../dbfiles/dbOperations.js';
 
 const seedRouter = express.Router();
 

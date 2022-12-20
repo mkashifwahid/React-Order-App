@@ -3,9 +3,8 @@ import sql from 'mssql';
 import Product from '../models/productModel.js';
 // import product from './productCart.js';
 
-async function getProducts() {
+export async function getProducts() {
   try {
-    console.log('product');
     let pool = await sql.connect(config);
     let products = await pool.request().query('exec sp_GetItem');
     return products;
@@ -33,11 +32,11 @@ async function getProducts() {
   }
 }
 
-async function getBookerUser(_code) {
+export async function getBookerUser(_code) {
   try {
     let pool = await sql.connect(config);
     let bookers = await pool.request().query(`exec sp_GetBookers '${_code}'`);
-    return bookers.recordset;
+    return bookers;
     // return await Product.create({
     //   Id: products.Id,
     //   ItemCode: products.recordsets.ItemCode,
@@ -74,4 +73,6 @@ const createCart = async (Product) => {
   }
 };
 
-export default { getProducts, getBookerUser, createCart };
+//module.exports = { GetProducts: getProducts, GetBookers: getBookerUser };
+//module.exports.getBookerUser = bookers;
+//export default { getProducts, getBookerUser, createCart };

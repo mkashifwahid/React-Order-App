@@ -1,6 +1,6 @@
 import express, { response } from 'express';
 import data from './data.js';
-import getProducts from './dbfiles/dbOperations.js';
+import { getProducts } from './dbfiles/dbOperations.js';
 import product from './dbfiles/productCart.js';
 import cors from 'cors';
 import seedRouter from './routes/seedRoutes.js';
@@ -8,10 +8,13 @@ import productRouter from './routes/ProductRoutes.js';
 //import Products from './models/productModel.js';
 import { DataTypes, Sequelize } from 'sequelize';
 import userRouter from './routes/userRoutes.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 //app.use('/api/seed', seedRouter);
