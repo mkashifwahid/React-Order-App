@@ -13,6 +13,7 @@ import { Store } from './Store';
 import SigninScreen from './screens/SigninScreen';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddCustomer from './screens/AddCustomer';
 //import './App.css';
 
 function App() {
@@ -75,10 +76,11 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:Id" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route path="/customer" element={<AddCustomer />} />
+              <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
         </main>
