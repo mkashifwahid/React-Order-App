@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
+import CheckoutSteps from '../component/CheckoutSteps';
 
 export default function AddCustomer() {
   const navigate = useNavigate();
@@ -35,13 +36,14 @@ export default function AddCustomer() {
         // code,
       })
     );
-    navigate('/');
+    navigate('/checkout');
   };
   return (
     <div>
       <Helmet>
         <title>Order Customer</title>
       </Helmet>
+      <CheckoutSteps step1 step2></CheckoutSteps>
       <div className="container small-container">
         <h3>Customer Information</h3>
         <Form onSubmit={submitHandler}>
