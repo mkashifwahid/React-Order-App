@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
+import { Store } from '../Store';
 
 export default function AddCustomer() {
+  const navigate = useNavigate();
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {
+    userInfo,
+    cart: { customerInfo },
+  } = state;
+
+  const [customerCode, setCustomerCode] = useState('');
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/signin?redirect=/customer');
+    }
+  }, [userInfo, navigate]);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    ctxDispatch({
+      type: 'SAVE_CUSTOMER',
+      payload: {
+        customerCode,
+      },
+    });
+    localStorage.setItem(
+      'customerInfo',
+      JSON.stringify({
+        // code,
+      })
+    );
+    navigate('/');
   };
-
   return (
     <div>
       <Helmet>
-        <titl>Add Customer</titl>
+        <title>Order Customer</title>
       </Helmet>
-      <h1>Customer Information</h1>
-      <Form onSubmit={submitHandler}>
-        <div>
-          <Button variat="primary" type="submit">
-            Continue
-          </Button>
-        </div>
-      </Form>
+      <div className="container small-container">
+        <h3>Customer Information</h3>
+        <Form onSubmit={submitHandler}>
+          <div>
+            <Button variat="primary" type="submit">
+              Continue
+            </Button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react';
+import { json } from 'react-router-dom';
 
 export const Store = createContext();
 
@@ -8,6 +9,10 @@ const initalState = {
     : null,
 
   cart: {
+    customer: localStorage.getItem('customerInfo')
+      ? JSON.parse(localStorage.getItem('customerInfo'))
+      : {},
+
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
@@ -40,6 +45,15 @@ function reducer(state, action) {
 
     case 'USER_SIGNOUT':
       return { ...state, userInfo: null };
+
+    case 'SAVE_CUSTOMER':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          customer: action.payload,
+        },
+      };
 
     default:
       return state;

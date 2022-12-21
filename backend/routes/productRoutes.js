@@ -13,7 +13,6 @@ productRouter.get(`/Id/:Id`, async (req, res) => {
   //const product = Product.findOne(x) => x.Id === req.params.Id);
 
   const products = await getProducts();
-  console.log(products);
   // const product = await products.recordset.findOne({ where: { Id: req.params.Id } });
   const product = products.recordset.findOne((x) => x.Id === req.params.Id);
   if (product) {
