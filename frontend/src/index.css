@@ -30,6 +30,11 @@ main {
   background-color: #f0c040;
   color: black;
 }
+.customers {
+  /* display: flex; */
+  justify-content: center;
+}
+
 .products {
   /* display: flex; */
   justify-content: center;

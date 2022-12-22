@@ -37,25 +37,25 @@ export async function getBookerUser(_code) {
     let pool = await sql.connect(config);
     let bookers = await pool.request().query(`exec sp_GetBookers '${_code}'`);
     return bookers;
-    // return await Product.create({
-    //   Id: products.Id,
-    //   ItemCode: products.recordsets.ItemCode,
-    //   ItemDesc: products.recordsets.ItemDesc,
-    //   ItemUnit: products.recordsets.ItemUnit,
-    //   ItemRate: products.recordsets.ItemRate,
-    //   ItemDisc: products.recordsets.ItemDisc,
-    //   ItemSTax: products.recordsets.ItemSTax,
-    //   Cmp_Name: products.recordsets.Cmp_Name,
-    //   Group_Desc: products.recordsets.Group_Desc,
-    // }).then(function (products) {
-    //   if (products) {
-    //     console.log(products, '12');
-    //     return products;
-    //   } else {
-    //     console.log(products, '13');
-    //   }
-    // });
-    //return products;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// export async function getCustomers(_code) {
+//   try {
+//     let pool = await sql.connect(config);
+//     let bookers = await pool.request().query(`exec sp_GetBookers '${_code}'`);
+//     return bookers;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+export async function getCustomers() {
+  try {
+    let pool = await sql.connect(config);
+    let customers = await pool.request().query(`exec sp_GetCustomers`);
+    return customers;
   } catch (error) {
     console.log(error);
   }

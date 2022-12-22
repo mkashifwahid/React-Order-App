@@ -8,6 +8,7 @@ import productRouter from './routes/ProductRoutes.js';
 //import Products from './models/productModel.js';
 import { DataTypes, Sequelize } from 'sequelize';
 import userRouter from './routes/userRoutes.js';
+import customerRouter from './routes/customerRoutes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors());
 //app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+app.use('/api/customers', customerRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
