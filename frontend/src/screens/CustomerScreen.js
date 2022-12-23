@@ -50,11 +50,11 @@ function CustomerScreen() {
   }, []);
   return (
     <div>
+      <CheckoutSteps step1 step2></CheckoutSteps>
       <Helmet>
         <title>Customer Information</title>
       </Helmet>
       <h1>List of Customer</h1>
-      <CheckoutSteps step1 step2></CheckoutSteps>
       {/* <div className=""> */}
       <div className="customers container small-container">
         {loading ? (
