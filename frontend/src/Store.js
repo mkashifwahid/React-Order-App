@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import { json } from 'react-router-dom';
+//import { json } from 'react-router-dom';
 
 export const Store = createContext();
 
@@ -49,7 +49,7 @@ function reducer(state, action) {
         userInfo: null,
         cart: {
           cartItems: [],
-          customerInfo: {},
+          customerInfo: '',
         },
       };
 

@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCustomer from './screens/AddCustomer';
 import CustomerScreen from './screens/CustomerScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 //import './App.css';
 
 function App() {
@@ -78,11 +79,12 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              <Route path="/product/:Id" element={<ProductScreen />} />
+              <Route path="/products/:Id" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/addcustomer" element={<AddCustomer />} />
               <Route path="/customer" element={<CustomerScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

@@ -8,15 +8,14 @@ import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
 
 function Customer(props) {
-  console.log(props);
   const navigate = useNavigate();
-  const { customer } = props;
+  console.log(props, 'ali');
+  const { selectedCustomer } = props;
+  console.log(props, 'raza');
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {
-    userInfo,
-    cart: { cartItems },
-  } = state;
-  const [itemQuantity, setQuantity] = useState(0);
+  const { userInfo } = state;
+
+  //const [custInfo, setCustInfo] = useState('');
 
   useEffect(() => {
     if (!userInfo) {
@@ -24,41 +23,24 @@ function Customer(props) {
     }
   }, [userInfo, navigate]);
 
-  const addToCartHandler = async (customer) => {
-    //console.log(this.quantity);
-    const existItem = cartItems.find((x) => x.Id === customer.Id);
-    const quantity = existItem
-      ? Number(existItem.quantity) + Number(itemQuantity)
-      : itemQuantity;
-    //const {data} = await axios.get(`/api/products/${item.itemId}`)
-    if (itemQuantity > 0) {
-      ctxDispatch({
-        type: 'CART_ADD_CUSTOMER',
-        payload: { ...customer, quantity },
-      });
-    }
+  const LinkToCartHandler = async (_customer) => {
+    //setCustomerCode(customer.CsCode);
 
     ctxDispatch({
       type: 'SAVE_CUSTOMER',
-      payload: {
-        //        customerCode,
-      },
+      payload: { _customer },
     });
-    localStorage.setItem(
-      'customerInfo',
-      JSON.stringify({
-        // code,
-      })
-    );
-    navigate('/checkout');
+
+    localStorage.setItem('customerInfo', JSON.stringify(_customer));
+    navigate('/placeorder');
   };
 
   return (
     <Card>
       <Card.Body>
-        <Link to={`/customer/${customer.CsCode}`}>
+        <Link to={`/customer/${selectedCustomer.CsCode}`}>
           <Card.Title>
-            {customer.CsCode} - {customer.CsName}
+            {selectedCustomer.CsCode} - {selectedCustomer.CsName}
           </Card.Title>
         </Link>
         {/* <Row>
@@ -68,15 +50,17 @@ function Customer(props) {
           <Card.Text>Name : {customer.CsName} %</Card.Text>
         </Row> */}
         <Row>
-          <Card.Text>CNIC : {customer.CsCNIC}</Card.Text>
+          <Card.Text>CNIC : {selectedCustomer.CsCNIC}</Card.Text>
         </Row>
         <Row>
-          <Card.Text>NTNO : {customer.CsNTNO}</Card.Text>
+          <Card.Text>NTNO : {selectedCustomer.CsNTNO}</Card.Text>
         </Row>
         <Row>
-          <Card.Text>Address : {customer.MarketName}</Card.Text>
+          <Card.Text>Address : {selectedCustomer.MarketName}</Card.Text>
         </Row>
-        <Button onClick={() => addToCartHandler(customer)}>Link to Cart</Button>
+        <Button onClick={() => LinkToCartHandler(selectedCustomer)}>
+          Link to Cart
+        </Button>
       </Card.Body>
     </Card>
   );

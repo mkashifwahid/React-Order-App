@@ -11,9 +11,10 @@ productRouter.get('/', async (req, res) => {
 
 productRouter.get(`/Id/:Id`, async (req, res) => {
   //const product = Product.findOne(x) => x.Id === req.params.Id);
-
+  console.log('yay');
   const products = await getProducts();
   // const product = await products.recordset.findOne({ where: { Id: req.params.Id } });
+  console.log(products.recordset);
   const product = products.recordset.findOne((x) => x.Id === req.params.Id);
   if (product) {
     res.send(product);
@@ -22,7 +23,8 @@ productRouter.get(`/Id/:Id`, async (req, res) => {
   }
 });
 
-productRouter.get('/api/products/:Id', async (req, res) => {
+productRouter.get('/api/product/:Id', async (req, res) => {
+  console.log('yay1');
   const product = await Product.findOne({ where: { Id: req.params.Id } });
   if (product) {
     res.send(product);
