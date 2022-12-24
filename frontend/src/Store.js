@@ -49,7 +49,7 @@ function reducer(state, action) {
         userInfo: null,
         cart: {
           cartItems: [],
-          customerInfo: '',
+          customerInfo: {},
         },
       };
 

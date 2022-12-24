@@ -9,9 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Customer(props) {
   const navigate = useNavigate();
-  console.log(props, 'ali');
-  const { selectedCustomer } = props;
-  console.log(props, 'raza');
+  const { customer } = props;
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
 
@@ -23,24 +21,24 @@ function Customer(props) {
     }
   }, [userInfo, navigate]);
 
-  const LinkToCartHandler = async (_customer) => {
+  const LinkToCartHandler = async (customer) => {
     //setCustomerCode(customer.CsCode);
 
     ctxDispatch({
       type: 'SAVE_CUSTOMER',
-      payload: { _customer },
+      payload: { customer },
     });
 
-    localStorage.setItem('customerInfo', JSON.stringify(_customer));
+    localStorage.setItem('customerInfo', JSON.stringify(customer));
     navigate('/placeorder');
   };
 
   return (
     <Card>
       <Card.Body>
-        <Link to={`/customer/${selectedCustomer.CsCode}`}>
+        <Link to={`/customer/${customer.CsCode}`}>
           <Card.Title>
-            {selectedCustomer.CsCode} - {selectedCustomer.CsName}
+            {customer.CsCode} - {customer.CsName}
           </Card.Title>
         </Link>
         {/* <Row>
@@ -50,15 +48,15 @@ function Customer(props) {
           <Card.Text>Name : {customer.CsName} %</Card.Text>
         </Row> */}
         <Row>
-          <Card.Text>CNIC : {selectedCustomer.CsCNIC}</Card.Text>
+          <Card.Text>CNIC : {customer.CsCNIC}</Card.Text>
         </Row>
         <Row>
-          <Card.Text>NTNO : {selectedCustomer.CsNTNO}</Card.Text>
+          <Card.Text>NTNO : {customer.CsNTNO}</Card.Text>
         </Row>
         <Row>
-          <Card.Text>Address : {selectedCustomer.MarketName}</Card.Text>
+          <Card.Text>Address : {customer.MarketName}</Card.Text>
         </Row>
-        <Button onClick={() => LinkToCartHandler(selectedCustomer)}>
+        <Button onClick={() => LinkToCartHandler(customer)}>
           Link to Cart
         </Button>
       </Card.Body>
