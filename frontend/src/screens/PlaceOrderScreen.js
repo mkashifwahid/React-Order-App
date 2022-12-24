@@ -12,12 +12,12 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const { cart, userInfo, customerInfo } = state;
   console.log(cart, 1);
 
   useEffect(() => {
     if (!cart.customerInfo) {
-      console.log(cart.customerInfo);
+      console.log(cart.customerInfo, 'hmm');
       navigate('/customer');
     }
   }, [cart, navigate]);
@@ -38,9 +38,9 @@ export default function PlaceOrderScreen() {
               <Card.Title>Customer Information</Card.Title>
               <Card.Text>
                 {/* <strong>Name:</strong> {cart.customerInfo.CsCode} -{' '} */}
-                <strong>Address:</strong> {cart.customerInfo.MarketName}
-                <strong>CNIC:</strong> {cart.customerInfo.CsCNIC}
-                <strong>NTN :</strong> {cart.customerInfo.CsNTNO}
+                {/* <strong>Address:</strong> {customerInfo.MarketName} */}
+                {/* <strong>CNIC:</strong> {cart.CsCNIC}
+                <strong>NTN :</strong> {cart.CsNTNO} */}
                 <strong>Address:</strong>
               </Card.Text>
               <Link to="/customer">Edit</Link>
