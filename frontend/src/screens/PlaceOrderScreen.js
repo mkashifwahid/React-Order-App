@@ -14,6 +14,8 @@ export default function PlaceOrderScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
   console.log(cart, 1);
+  console.log(cart.customerInfo, 2);
+  console.log(cart.customerInfo.customer.CsCode, 3);
 
   useEffect(() => {
     if (!cart.customerInfo) {
@@ -37,13 +39,48 @@ export default function PlaceOrderScreen() {
             <Card.Body>
               <Card.Title>Customer Information</Card.Title>
               <Card.Text>
-                {/* <strong>Name:</strong> {cart.customerInfo.CsCode} -{' '} */}
-                <strong>Address:</strong> {cart.customerInfo.MarketName}
-                <strong>CNIC:</strong> {cart.customerInfo.CsCNIC}
-                <strong>NTN :</strong> {cart.customerInfo.CsNTNO}
-                <strong>Address:</strong>
+                <Row>
+                  <Col>
+                    <strong>Name :</strong> {cart.customerInfo.customer.CsCode}{' '}
+                    - {cart.customerInfo.customer.CsName}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <strong>Address :</strong>{' '}
+                    {cart.customerInfo.customer.MarketName}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <strong>CNIC :</strong> {cart.customerInfo.customer.CsCNIC}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <strong>NTN :</strong> {cart.customerInfo.customer.CsNTNO}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <strong>Address :</strong>
+                    {cart.customerInfo.customer.MarketName}
+                  </Col>
+                </Row>
               </Card.Text>
               <Link to="/customer">Edit</Link>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Body>
+              <Card.Title>Items</Card.Title>
+              <ListGroup variant=>
+
+              
+              {cart.carItem.map(()=>{
+
+              })}
+              </ListGroup>
             </Card.Body>
           </Card>
         </Col>
