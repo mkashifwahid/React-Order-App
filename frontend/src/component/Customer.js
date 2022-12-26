@@ -23,7 +23,7 @@ function Customer(props) {
 
   const LinkToCartHandler = async (customer) => {
     //setCustomerCode(customer.CsCode);
-    console.log(_customer.csCode);
+    console.log(customer.csCode);
     ctxDispatch({
       type: 'SAVE_CUSTOMER',
       payload: { customer },
