@@ -1,39 +1,83 @@
-import React, { useContext, useEffect } from 'react';
+import Axios from 'axios';
+import React, { useContext, useEffect, useReducer } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
 import CheckoutSteps from '../component/CheckoutSteps';
+import LoadingBox from '../component/LoadingBox';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Store } from '../Store';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import ListGroupItem from 'react-bootstrap/esm/ListGroupItem';
+import { toast } from 'react-toastify';
+import { getError } from '../util';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE_REQUEST':
+      return { ...state, loading: true };
+    case 'CREATE_SUCCESS':
+      return { ...state, loading: false };
+    case 'CREATE_FAIL':
+      return { ...state, loading: false };
+    default:
+      return false;
+  }
+};
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
-  const { state } = useContext(Store);
-  const { c } = state;
+  const [{ loading }, dispatch] = useReducer(reducer, {
+    loading: false,
+  });
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart, userInfo } = state;
+
   console.log(cart, 1);
   console.log(cart.customerInfo, 2);
   console.log(cart.customerInfo.customer.CsCode, 3);
 
-  // useEffect(() => {
-  //   if (!cart.customerInfo) {
-  //     console.log(cart.customerInfo, 'hmm');
-  //     navigate('/customer');
-  //   }
-  // }, [cart, navigate]);
+  useEffect(() => {
+    if (!cart.customerInfo) {
+      navigate('/customer');
+    }
+  }, [cart, navigate]);
 
-  // const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
-  // cart.itemsPrice = 0;
-  // cart.itemsDiscount = 0;
-  // cart.itemsSTax = 0;
-  // round2(cart.cartItems.reduce((a, c) => a + c.quantity * c.ItemRate, 0));
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+  cart.itemsPrice = 0;
+  cart.itemsDiscount = 0;
+  cart.itemsSTax = 0;
+  round2(cart.cartItems.reduce((a, c) => a + c.quantity * c.ItemRate, 0));
 
-  // cart.orderTotal = cart.itemsPrice;
+  cart.orderTotal = cart.itemsPrice;
 
-  const placeOrderHandler = async () => {};
+  const placeOrderHandler = async () => {
+    try {
+      dispatch({ type: 'CREATE_REQUEST' });
+      const { data } = await Axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          customer: cart.customerInfo,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      navigate(`/order/${data.order.id}`);
+    } catch (err) {
+      dispatch({ type: 'CREATE_FAIL' });
+      toast.error(getError(err));
+    }
+  };
 
   return (
     <div>
@@ -147,6 +191,7 @@ export default function PlaceOrderScreen() {
                       Place Order
                     </Button>
                   </div>
+                  {loading && <LoadingBox></LoadingBox>}
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>
