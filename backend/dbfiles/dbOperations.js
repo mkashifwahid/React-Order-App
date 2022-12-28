@@ -1,6 +1,7 @@
 import config from './dbConfig.js';
 import sql from 'mssql';
 import Product from '../models/productModel.js';
+import e from 'express';
 // import product from './productCart.js';
 
 export async function getProducts() {
@@ -41,6 +42,50 @@ export async function getBookerUser(_code) {
     console.log(error);
   }
 }
+
+export async function addOrder(_customerCode) {
+  try {
+    let pool = await sql.connect(config);
+    // let transaction;
+    // transaction = new sql.Transaction(config);
+    // await transaction.begin();
+    // const request = new sql.Request(transaction);
+
+    console.log(_customerCode, '111');
+    let result = 0;
+    let orderId = await pool
+      .request()
+      .output('SqlBookerhID', sql.BigInt)
+      .input('BookerCode', sql.VarChar(15), _customerCode)
+      .execute(`sp_AddOrder_H`);
+
+    console.log(orderId, orderId.returnValue, ' booker id agai');
+    //_orderItems
+  } catch (error) {
+    console.log(error, ' hello error');
+  }
+}
+
+// export async function addOrder(_orderItems, _customerCode, _bookerUserId) {
+//   try {
+//     let pool = await sql.connect(config);
+//     let transaction;
+//     transaction = new sql.Transaction(config);
+//     await transaction.begin();
+//     const request = new sql.Request(transaction);
+
+//     console.log(_customerCode);
+
+//     let orderId = await request().query(
+//       `exec sp_AddOrder_H '${_customerCode}'`
+//     );
+
+//     console.log(orderId);
+//     //_orderItems
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // export async function getCustomers(_code) {
 //   try {

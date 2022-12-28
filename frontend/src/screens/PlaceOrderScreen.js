@@ -57,11 +57,12 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
+      console.log(cart.customerInfo.customer.CsCode, '2222');
       const { data } = await Axios.post(
         '/api/orders',
         {
           orderItems: cart.cartItems,
-          customer: cart.customerInfo,
+          customer: cart.customerInfo.customer.CsCode,
         },
         {
           headers: {
