@@ -32,9 +32,3 @@ customerRouter.get('/api/customers/:Id', async (req, res) => {
 });
 
 export default customerRouter;
-
-// app.get('/api/products', async (req, res) => {
-//     console.log('connect to server');
-//     const result = await getProducts();
-//     res.send(result.recordset);
-//   });

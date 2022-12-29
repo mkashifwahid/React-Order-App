@@ -97,18 +97,18 @@ export default function CartScreen() {
             <Card.Body>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>
+                  <strong>
                     Total ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     items)
-                    <h3>
+                    <strong>
                       Rs. :{' '}
                       {cartItems.reduce(
                         (a, c) => a + c.ItemRate * c.quantity,
                         0
                       )}
                       /-
-                    </h3>
-                  </h3>
+                    </strong>
+                  </strong>
                   <ListGroup.Item>
                     <div className="d-grid">
                       <Button

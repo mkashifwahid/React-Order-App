@@ -15,7 +15,6 @@ function Product(props) {
   } = state;
   const [itemQuantity, setQuantity] = useState(0);
   const addToCartHandler = async (item) => {
-    //console.log(this.quantity);
     const existItem = cartItems.find((x) => x.Id === product.Id);
     const quantity = existItem
       ? Number(existItem.quantity) + Number(itemQuantity)

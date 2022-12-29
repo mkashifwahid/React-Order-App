@@ -36,10 +36,6 @@ export default function PlaceOrderScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
-  console.log(cart, 1);
-  console.log(cart.customerInfo, 2);
-  console.log(cart.customerInfo.customer.CsCode, 3);
-
   useEffect(() => {
     if (!cart.customerInfo) {
       navigate('/customer');
@@ -57,12 +53,12 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
-      console.log(cart.customerInfo.customer.CsCode, '2222');
       const { data } = await Axios.post(
         '/api/orders',
         {
           orderItems: cart.cartItems,
           customer: cart.customerInfo.customer.CsCode,
+          bookerUserId: cart.userInfo.code,
         },
         {
           headers: {
@@ -82,9 +78,7 @@ export default function PlaceOrderScreen() {
 
   return (
     <div>
-      <CheckoutSteps step1 step2>
-        {' '}
-      </CheckoutSteps>
+      <CheckoutSteps step1 step2 />
       <Helmet>
         <title>Preview Order</title>
       </Helmet>
@@ -96,32 +90,35 @@ export default function PlaceOrderScreen() {
               <Card.Title>Customer Information</Card.Title>
               <Card.Text>
                 <Row>
-                  <Col>
-                    <strong>Name :</strong> {cart.customerInfo.customer.CsCode}{' '}
-                    - {cart.customerInfo.customer.CsName}
+                  <Col md={3}>
+                    <strong>Name :</strong>
                   </Col>
+                  <Col md={2}> {cart.customerInfo.customer.CsCode}</Col>
+                  <Col>{cart.customerInfo.customer.CsName}</Col>
                 </Row>
                 <Row>
-                  <Col>
-                    <strong>Address :</strong>{' '}
-                    {cart.customerInfo.customer.MarketName}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <strong>CNIC :</strong> {cart.customerInfo.customer.CsCNIC}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <strong>NTN :</strong> {cart.customerInfo.customer.CsNTNO}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
+                  <Col md={3}>
                     <strong>Address :</strong>
-                    {cart.customerInfo.customer.MarketName}
                   </Col>
+                  <Col>{cart.customerInfo.customer.CsAddrs}</Col>
+                </Row>
+                <Row>
+                  <Col md={3}>
+                    <strong>CNIC :</strong>
+                  </Col>
+                  <Col>{cart.customerInfo.customer.CsCNIC}</Col>
+                </Row>
+                <Row>
+                  <Col md={3}>
+                    <strong>NTN :</strong>
+                  </Col>
+                  <Col>{cart.customerInfo.customer.CsNTNO}</Col>
+                </Row>
+                <Row>
+                  <Col md={3}>
+                    <strong>Market :</strong>
+                  </Col>
+                  <Col>{cart.customerInfo.customer.MarketName}</Col>
                 </Row>
               </Card.Text>
               <Link to="/customer">Edit</Link>
@@ -134,10 +131,10 @@ export default function PlaceOrderScreen() {
                 {cart.cartItems.map((item) => (
                   <ListGroup.Item key={item.Id}>
                     <Row className="align-items-center">
-                      <Col md={6}>
+                      <Col md={7}>
                         <Link to={`/product/${item.Id}`}>{item.ItemDesc}</Link>
                       </Col>
-                      <Col md={3}>
+                      <Col md={2}>
                         <span>{item.quantity}</span>
                       </Col>
                       <Col md={3}>{item.ItemRate}</Col>
