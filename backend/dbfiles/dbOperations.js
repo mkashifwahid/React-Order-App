@@ -53,9 +53,11 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
       );
     });
     request.input('Order', Order);
-    request.output('SqlOrderId', sql.BigInt);
+    //request.output('SqlOrderId', sql.BigInt);
     const result = await request.execute('sp_AddOrder_H');
     await transaction.commit();
+    console.log(result, 11111111111111);
+    return result.recordset;
   } catch (error) {
     await transaction.rollback();
   } finally {

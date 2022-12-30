@@ -10,13 +10,14 @@ orderRouter.post(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const user = await addOrder(
+    const order = await addOrder(
       `${req.body.customer}`,
       `${req.body.bookerUserId}`,
       ...req.body.orderItems
     );
 
-    //res.status(401).send({ message: 'Invalid id or password' });
+    console.log(typeof order, 'hello world');
+    res.status(201).send({ message: 'Order Created', order });
   })
 );
 
