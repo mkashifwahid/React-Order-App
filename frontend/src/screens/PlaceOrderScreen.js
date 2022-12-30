@@ -23,7 +23,7 @@ const reducer = (state, action) => {
     case 'CREATE_FAIL':
       return { ...state, loading: false };
     default:
-      return false;
+      return state;
   }
 };
 
@@ -58,7 +58,7 @@ export default function PlaceOrderScreen() {
         {
           orderItems: cart.cartItems,
           customer: cart.customerInfo.customer.CsCode,
-          bookerUserId: cart.userInfo.code,
+          bookerUserId: userInfo.code,
         },
         {
           headers: {
@@ -66,6 +66,7 @@ export default function PlaceOrderScreen() {
           },
         }
       );
+
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
@@ -89,37 +90,37 @@ export default function PlaceOrderScreen() {
             <Card.Body>
               <Card.Title>Customer Information</Card.Title>
               <Card.Text>
-                <Row>
+                {/* <Row>
                   <Col md={3}>
                     <strong>Name :</strong>
                   </Col>
                   <Col md={2}> {cart.customerInfo.customer.CsCode}</Col>
                   <Col>{cart.customerInfo.customer.CsName}</Col>
-                </Row>
-                <Row>
+                </Row> */}
+                {/* <Row>
                   <Col md={3}>
                     <strong>Address :</strong>
                   </Col>
                   <Col>{cart.customerInfo.customer.CsAddrs}</Col>
-                </Row>
-                <Row>
+                </Row> */}
+                {/* <Row>
                   <Col md={3}>
                     <strong>CNIC :</strong>
                   </Col>
                   <Col>{cart.customerInfo.customer.CsCNIC}</Col>
-                </Row>
-                <Row>
+                </Row> */}
+                {/* <Row>
                   <Col md={3}>
                     <strong>NTN :</strong>
                   </Col>
                   <Col>{cart.customerInfo.customer.CsNTNO}</Col>
-                </Row>
-                <Row>
+                </Row> */}
+                {/* <Row>
                   <Col md={3}>
                     <strong>Market :</strong>
                   </Col>
                   <Col>{cart.customerInfo.customer.MarketName}</Col>
-                </Row>
+                </Row> */}
               </Card.Text>
               <Link to="/customer">Edit</Link>
             </Card.Body>

@@ -2,6 +2,8 @@ import config from './dbConfig.js';
 import sql from 'mssql';
 import Product from '../models/productModel.js';
 import e from 'express';
+import Order from '../models/orderModel.js';
+import { or } from 'sequelize';
 // import product from './productCart.js';
 
 export async function getProducts() {
@@ -24,7 +26,7 @@ export async function getBookerUser(_code) {
   }
 }
 
-export async function addOrder(_customerCode) {
+export async function addOrder(_customerCode, _bookerCode, ..._items) {
   let transaction;
   let pool = await sql.connect(config);
 
@@ -32,15 +34,28 @@ export async function addOrder(_customerCode) {
     transaction = new sql.Transaction(pool);
     await transaction.begin();
     const request = new sql.Request(transaction);
+    _items.map((x) => {
+      console.log(x);
+    });
 
-    let result = await request
-      .output('SqlBookerhID', sql.BigInt)
-      .input('BookerCode', sql.VarChar(15), _customerCode)
-      .input('CustomerCode', sql.VarChar(15), _customerCode)
-      .execute(`sp_AddOrder_H`);
-
+    Order.create;
+    _items.forEach((item) => {
+      Order.rows.add(
+        _bookerCode,
+        _customerCode,
+        '',
+        item.ItemCode,
+        item.quantity,
+        item.ItemRate,
+        item.ItemDisc,
+        item.ItemSTax,
+        0
+      );
+    });
+    request.input('Order', Order);
+    request.output('SqlOrderId', sql.BigInt);
+    const result = await request.execute('sp_AddOrder_H');
     await transaction.commit();
-    //_orderItems
   } catch (error) {
     await transaction.rollback();
   } finally {
