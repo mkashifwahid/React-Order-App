@@ -79,6 +79,7 @@ export default function OrderScreen() {
               </Card.Title>
             </Card.Body>
           </Card>
+          <Card></Card>
         </Col>
       </Row>
     </div>
