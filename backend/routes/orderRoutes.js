@@ -17,6 +17,7 @@ orderRouter.post(
     );
 
     console.log(typeof order, 'hello world');
+    console.log(order, 'hello world 2');
     res.status(201).send({ message: 'Order Created', order });
   })
 );

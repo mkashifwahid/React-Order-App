@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddCustomer from './screens/AddCustomer';
 import CustomerScreen from './screens/CustomerScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
 //import './App.css';
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
               <Route path="/addcustomer" element={<AddCustomer />} />
               <Route path="/customer" element={<CustomerScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
+              <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

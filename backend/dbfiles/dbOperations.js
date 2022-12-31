@@ -57,7 +57,7 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
     const result = await request.execute('sp_AddOrder_H');
     await transaction.commit();
     console.log(result, 11111111111111);
-    return result.recordset;
+    return result.recordset[0];
   } catch (error) {
     await transaction.rollback();
   } finally {
