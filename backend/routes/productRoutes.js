@@ -1,7 +1,7 @@
 import express from 'express';
 import Product from '../models/productModel.js';
 import { getProducts } from '../dbfiles/dboperations.js';
-console.log('Hello world');
+
 const productRouter = express.Router();
 
 productRouter.get('/', async (req, res) => {

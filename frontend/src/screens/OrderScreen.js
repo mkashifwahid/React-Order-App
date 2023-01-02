@@ -4,11 +4,12 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import LoadingBox from '../component/LoadingBox';
 import MessageBox from '../component/LoadingBox';
 import { Store } from '../Store';
 import { getError } from '../util';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -27,7 +28,6 @@ export default function OrderScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   const params = useParams();
-
   const navigate = useNavigate();
   const { id: orderId } = params;
 
@@ -37,6 +37,7 @@ export default function OrderScreen() {
     error: '',
   });
 
+  console.log(order, '030303');
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -63,25 +64,81 @@ export default function OrderScreen() {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
-      <Helmet>
-        <title>Order {orderId}</title>
-      </Helmet>
-      <h1 className="my-3">Order {orderId}</h1>
-      <Row>
-        <Col md={8}>
-          <Card>
-            <Card.Body>
-              <Card.Title>
-                <Card.Text>
-                  <strong>Name:</strong> {order.CustomerCode}
-                </Card.Text>
-              </Card.Title>
-            </Card.Body>
-          </Card>
-          <Card></Card>
-        </Col>
-      </Row>
-    </div>
+    <div>My Name</div>
+    // <div>
+    //   <Helmet>
+    //     <title>Order {orderId}</title>
+    //   </Helmet>
+    //   <h1 className="my-3">Order {orderId}</h1>
+    //   <Row>
+    //     <Col md={8}>
+    //       {/* <Card>
+    //         <Card.Body>
+    //           <Card.Title>
+    //             <Card.Text>
+    //               <strong>Name:</strong> {order.CustomerCode}
+    //             </Card.Text>
+    //           </Card.Title>
+    //         </Card.Body>
+    //       </Card> */}
+    //       {/* <Card>
+    //         <Card.Body>
+    //           <Card.Title>Items</Card.Title>
+    //           <ListGroup variant="flush">
+    //             {order.orderItems.map((item) => (
+    //               <ListGroup.Item key={item.Id}>
+    //                 <Row className="align-items-center">
+    //                   <Col md={7}>
+    //                     <Link to={`/product/${item.Id}`}>{item.ItemDesc}</Link>
+    //                   </Col>
+    //                   <Col md={2}>
+    //                     <span>{item.quantity}</span>
+    //                   </Col>
+    //                   <Col md={3}>{item.ItemRate}</Col>
+    //                 </Row>
+    //               </ListGroup.Item>
+    //             ))}
+    //           </ListGroup>
+    //           <Link to="/cart">Edit</Link>
+    //         </Card.Body>
+    //       </Card> */}
+    //     </Col>
+    //     <Col md={4}>
+    //       {/* <Card className="mb-3">
+    //         <Card.Body>
+    //           <Card.Title>Order Summary</Card.Title>
+    //           <ListGroup variant="flush">
+    //             <ListGroup.Item>
+    //               <Row>
+    //                 <Col>Items</Col>
+    //                 <Col>${order.itemsPrice.toFixed(2)}</Col>
+    //               </Row>
+    //             </ListGroup.Item>
+    //             <ListGroup.Item>
+    //               <Row>
+    //                 <Col>Discount</Col>
+    //                 <Col>${order.itemDiscount.toFixed(2)}</Col>
+    //               </Row>
+    //             </ListGroup.Item>
+    //             <ListGroup.Item>
+    //               <Col>Sales Tax</Col>
+    //               <Col>${order.itemSTax.toFixed(2)}</Col>
+    //             </ListGroup.Item>
+    //           </ListGroup>
+    //           <ListGroup.Item>
+    //             <Row>
+    //               <Col>
+    //                 <strong>Order Total</strong>
+    //               </Col>
+    //               <Col>
+    //                 <strong>${order.orderTotal.toFixed(2)}</strong>
+    //               </Col>
+    //             </Row>
+    //           </ListGroup.Item>
+    //         </Card.Body>
+    //       </Card> */}
+    //     </Col>
+    //   </Row>
+    // </div>
   );
 }

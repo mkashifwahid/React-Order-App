@@ -34,9 +34,9 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
     transaction = new sql.Transaction(pool);
     await transaction.begin();
     const request = new sql.Request(transaction);
-    _items.map((x) => {
-      console.log(x);
-    });
+    // _items.map((x) => {
+    //   console.log(x);
+    // });
 
     Order.create;
     _items.forEach((item) => {
@@ -56,12 +56,23 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
     //request.output('SqlOrderId', sql.BigInt);
     const result = await request.execute('sp_AddOrder_H');
     await transaction.commit();
-    console.log(result, 11111111111111);
     return result.recordset[0];
   } catch (error) {
     await transaction.rollback();
   } finally {
     await pool.close();
+  }
+}
+
+export async function getOrderById(_orderId) {
+  try {
+    let pool = await sql.connect(config);
+    let order = await pool
+      .request()
+      .query(`exec sp_GetOrderById '${_orderId}'`);
+    return order;
+  } catch (error) {
+    console.log(error);
   }
 }
 
