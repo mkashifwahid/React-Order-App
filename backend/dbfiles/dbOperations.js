@@ -65,12 +65,19 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
 }
 
 export async function getOrderById(_orderId) {
+  console.log('going to db for get order');
   try {
     let pool = await sql.connect(config);
     let order = await pool
       .request()
       .query(`exec sp_GetOrderById '${_orderId}'`);
-    return order;
+
+    const returnData = {
+      id: order.recordset[0].BknghID,
+      order: order.recordset,
+    };
+    console.log(returnData, 'recordset');
+    return returnData;
   } catch (error) {
     console.log(error);
   }
@@ -81,6 +88,16 @@ export async function getCustomers() {
     let pool = await sql.connect(config);
     let customers = await pool.request().query(`exec sp_GetCustomers`);
     return customers;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getOrderByUser() {
+  try {
+    let pool = await sql.connect(config);
+    let orders = await pool.request().query(`exec sp_GetOrderByUser`);
+    return orders;
   } catch (error) {
     console.log(error);
   }

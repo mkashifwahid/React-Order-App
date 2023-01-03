@@ -2,7 +2,11 @@ import express from 'express';
 import { getBookerUser } from '../dbfiles/dboperations.js';
 import { generateToken, isAuth } from '../utils.js';
 import expressAsyncHandler from 'express-async-handler';
-import { addOrder, getOrderById } from '../dbfiles/dboperations.js';
+import {
+  addOrder,
+  getOrderById,
+  getOrderByUser,
+} from '../dbfiles/dboperations.js';
 
 const orderRouter = express.Router();
 
@@ -21,10 +25,23 @@ orderRouter.post(
 );
 
 orderRouter.get(
+  '/mine',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    //console.log(req.user.BookerCode);
+    const orders = await getOrderByUser();
+    if (orders) {
+      res.send(orders.recordset);
+    } else {
+      res.status(404).send({ message: 'Order Not Found', order });
+    }
+  })
+);
+
+orderRouter.get(
   '/:id',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log(req.params.id, 'aqaq');
     const order = await getOrderById(req.params.id);
     if (order) {
       res.send(order);
