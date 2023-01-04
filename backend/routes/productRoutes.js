@@ -1,6 +1,7 @@
 import express from 'express';
 import Product from '../models/productModel.js';
 import { getProducts } from '../dbfiles/dboperations.js';
+import expressAsyncHandler from 'express-async-handler';
 
 const productRouter = express.Router();
 
@@ -8,6 +9,14 @@ productRouter.get('/', async (req, res) => {
   const products = await getProducts();
   res.send(products.recordset);
 });
+
+productRouter.get(
+  '/categories',
+  expressAsyncHandler(async (req, res) => {
+    const categories = await getCategories();
+    res.send(categories);
+  })
+);
 
 productRouter.get(`/Id/:Id`, async (req, res) => {
   //const product = Product.findOne(x) => x.Id === req.params.Id);
