@@ -1,6 +1,10 @@
 import express from 'express';
 import Product from '../models/productModel.js';
-import { getProducts } from '../dbfiles/dboperations.js';
+import {
+  getProducts,
+  getCategories,
+  getSearchProducts,
+} from '../dbfiles/dboperations.js';
 import expressAsyncHandler from 'express-async-handler';
 
 const productRouter = express.Router();
@@ -10,11 +14,40 @@ productRouter.get('/', async (req, res) => {
   res.send(products.recordset);
 });
 
+const PAGE_SIZE = 3;
+
+productRouter.get(
+  '/search',
+  expressAsyncHandler(async (req, res) => {
+    const { query } = req;
+    console.log(query);
+
+    // const pageSize = query.pageSize || PAGE_SIZE;
+    // const pages = query.page || 1;
+    const company = query.category;
+    const itemName = query.query;
+
+    // const queryFilter =
+    //   searchQuery && searchQuery !== 'all'
+    //     ? {
+    //         name: {
+    //           $regex: searchQuery,
+    //           $options: 'í',
+    //         },
+    //       }
+    //     : {};
+    // const categoryFilter = category && category !== 'all' ? { category } : {};
+
+    const products = await getSearchProducts(company, itemName);
+    res.send(products.recordset);
+  })
+);
+
 productRouter.get(
   '/categories',
   expressAsyncHandler(async (req, res) => {
     const categories = await getCategories();
-    res.send(categories);
+    res.send(categories.recordset);
   })
 );
 

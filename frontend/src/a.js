@@ -1,29 +1,29 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
-import CartScreen from './screens/CartScreen';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropDown from 'react-bootstrap/NavDropDown';
 import Badge from 'react-bootstrap/Badge';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { Store } from './Store';
+import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AddCustomer from './screens/AddCustomer';
-import CustomerScreen from './screens/CustomerScreen';
+import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import SignupScreen from './screens/SignupScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import Button from 'react-bootstrap/Button';
+import { getError } from './utils';
 import axios from 'axios';
-import { getError } from './util';
-import SearchBox from './component/SearchBox';
-import SearchScreen from './screens/SearchScreen';
-//import './App.css';
+import SearchBox from './components/SearchBox';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -32,17 +32,17 @@ function App() {
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
-    localStorage.removeItem('customerInfo');
-    window.location.href = '/singin';
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
+    window.location.href = '/signin';
   };
-
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get('/api/products/categories');
-        console.log(data, 'ali raza');
+        const { data } = await axios.get(`/api/products/categories`);
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));
@@ -69,33 +69,31 @@ function App() {
               >
                 <i className="fas fa-bars"></i>
               </Button>
+
               <LinkContainer to="/">
-                <Navbar.Brand>Madni Booker App</Navbar.Brand>
+                <Navbar.Brand>amazona</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <SearchBox />
-                <Nav className="me-auto w-100 justify-content-end">
+                <Nav className="me-auto  w-100  justify-content-end">
                   <Link to="/cart" className="nav-link">
                     Cart
                     {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
-                        {cart.cartItems.reduce(
-                          (a, c) => Number(a) + Number(c.quantity),
-                          0
-                        )}
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                       </Badge>
                     )}
                   </Link>
                   {userInfo ? (
-                    <NavDropDown title={userInfo.name} id="basic-nav-dropdown">
+                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                       <LinkContainer to="/profile">
-                        <NavDropDown.Item>User Profile</NavDropDown.Item>
+                        <NavDropdown.Item>User Profile</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/orderhistory">
-                        <NavDropDown.Item>Order History</NavDropDown.Item>
+                        <NavDropdown.Item>Order History</NavDropdown.Item>
                       </LinkContainer>
-                      <NavDropDown.Divider />
+                      <NavDropdown.Divider />
                       <Link
                         className="dropdown-item"
                         to="#signout"
@@ -103,7 +101,7 @@ function App() {
                       >
                         Sign Out
                       </Link>
-                    </NavDropDown>
+                    </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
                       Sign In
@@ -123,19 +121,15 @@ function App() {
         >
           <Nav className="flex-column text-white w-100 p-2">
             <Nav.Item>
-              <strong>Companies</strong>
+              <strong>Categories</strong>
             </Nav.Item>
             {categories.map((category) => (
-              <Nav.Item key={category.Group_Code}>
+              <Nav.Item key={category}>
                 <LinkContainer
-                  to={{
-                    pathname: '/search',
-                    hash: '#hash',
-                    search: `category=${category.Group_Code}`,
-                  }}
+                  to={`/search?category=${category}`}
                   onClick={() => setSidebarIsOpen(false)}
                 >
-                  <Nav.Link>{category.Group_Desc}</Nav.Link>
+                  <Nav.Link>{category}</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
             ))}
@@ -144,15 +138,22 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              <Route path="/products/:Id" element={<ProductScreen />} />
+              <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
-              <Route path="/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
-              <Route path="/addcustomer" element={<AddCustomer />} />
-              <Route path="/customer" element={<CustomerScreen />} />
+              <Route path="/signup" element={<SignupScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+              <Route path="/order/:id" element={<OrderScreen />}></Route>
+              <Route
+                path="/orderhistory"
+                element={<OrderHistoryScreen />}
+              ></Route>
+              <Route
+                path="/shipping"
+                element={<ShippingAddressScreen />}
+              ></Route>
+              <Route path="/payment" element={<PaymentMethodScreen />}></Route>
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

@@ -16,6 +16,29 @@ export async function getProducts() {
   }
 }
 
+export async function getSearchProducts(_companyCode, _itemName) {
+  try {
+    let pool = await sql.connect(config);
+    let products = await pool
+      .request()
+      .query(`exec sp_GetSearchItem '${_companyCode}', '${_itemName}'`);
+    console.log(products);
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCategories() {
+  try {
+    let pool = await sql.connect(config);
+    let categories = await pool.request().query('exec sp_GetCategories');
+    return categories;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getBookerUser(_code) {
   try {
     let pool = await sql.connect(config);

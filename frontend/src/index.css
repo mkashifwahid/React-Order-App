@@ -26,7 +26,8 @@ main {
   /* //margin: 1rem; */
   flex: 1;
 }
-.btn-primary {
+.btn-primary,
+.btn-outline-primary {
   background-color: #f0c040;
   color: black;
 }
@@ -71,7 +72,7 @@ main {
   font-weight: bold;
 }
 
-.site-navbar {
+.side-navbar {
   width: 240px;
   height: 100%;
   position: absolute;
@@ -79,7 +80,7 @@ main {
   background-color: #100901;
   transition: 0.5s;
 }
-.site-container {
+.side-container {
   transition: 0.4s;
 }
 .active-cont {
@@ -88,4 +89,8 @@ main {
 
 .active-nav {
   left: 0;
+}
+
+.text-bold {
+  font-weight: bold;
 }
