@@ -50,16 +50,11 @@ export default function OrderScreen() {
       }
     };
 
-    console.log(orderId, 'order info11');
-
     if (!userInfo) {
       return navigate('/login');
     }
-    console.log(orderId, 'order info11');
-    console.log(order, 'order info');
-    console.log(order.id, 'order info idnp');
+
     if (!order.id || (order.id && order.id !== orderId)) {
-      console.log('fetch gaya');
       fetchOrder();
     }
   }, [order, userInfo, orderId, navigate]);
@@ -76,32 +71,60 @@ export default function OrderScreen() {
       <h1 className="my-3">Order {order.order[0].BknghRefNo}</h1>
       <Row>
         <Col md={8}>
-          <Card>
+          {/* <div>
+            <Row>
+              <Col md={1}></Col>
+              <Col md={3}>
+                <strong>Customer Name:</strong>
+              </Col>
+              <Col>{order.order[0].CsName}</Col>
+            </Row>
+          </div> */}
+          {/* <Card>
             <Card.Body>
               <Card.Title>
                 <Card.Text>
-                  <Row>
-                    <Col md={2}>
-                      <strong>Name:</strong>
-                    </Col>
-                    <Col>{order.order[0].CsName}</Col>
-                  </Row>
+                    <Row key={order.order[0].BknghId}>
+                      <Col md={2}>
+                        <strong>Name:</strong>
+                      </Col>
+                      <Col>{order.order[0].CsName}</Col>
+                    </Row>
                 </Card.Text>
               </Card.Title>
             </Card.Body>
-          </Card>
+          </Card> */}
           <Card>
             <Card.Body>
-              <Card.Title>Items</Card.Title>
               <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <Card.Title>
+                    <Row>
+                      <Col md={4}>
+                        <strong>Customer : </strong>
+                      </Col>
+                      <Col>{order.order[0].CsName}</Col>
+                    </Row>
+                  </Card.Title>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Items</strong>
+                </ListGroup.Item>
+                {/* <Row>
+                  <Col md={1}></Col>
+                  <Col md={3}>
+                    <strong>Customer Name:</strong>
+                  </Col>
+                  <Col>{order.order[0].CsName}</Col>
+                </Row> */}
                 {order.order.map((item) => (
                   <ListGroup.Item key={item.ItemCode}>
                     <Row className="align-items-center">
                       <Col md={7}>{item.ItemDesc}</Col>
                       <Col md={2}>
-                        <span>{item.quantity}</span>
+                        <span>{item.BkngdQnty}</span>
                       </Col>
-                      <Col md={3}>{item.ItemRate}</Col>
+                      <Col md={3}>{item.BkngdTpRate}</Col>
                     </Row>
                   </ListGroup.Item>
                 ))}

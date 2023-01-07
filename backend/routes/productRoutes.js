@@ -20,24 +20,8 @@ productRouter.get(
   '/search',
   expressAsyncHandler(async (req, res) => {
     const { query } = req;
-    console.log(query);
-
-    // const pageSize = query.pageSize || PAGE_SIZE;
-    // const pages = query.page || 1;
     const company = query.category;
     const itemName = query.query;
-
-    // const queryFilter =
-    //   searchQuery && searchQuery !== 'all'
-    //     ? {
-    //         name: {
-    //           $regex: searchQuery,
-    //           $options: 'í',
-    //         },
-    //       }
-    //     : {};
-    // const categoryFilter = category && category !== 'all' ? { category } : {};
-
     const products = await getSearchProducts(company, itemName);
     res.send(products.recordset);
   })

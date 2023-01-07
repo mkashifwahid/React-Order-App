@@ -70,8 +70,6 @@ export default function PlaceOrderScreen() {
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
-      console.log(data.order.BknghID, '3333');
-      console.log(data.order.BknghID, '4333');
       navigate(`/order/${data.order.BknghID}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
@@ -135,7 +133,9 @@ export default function PlaceOrderScreen() {
                   <ListGroup.Item key={item.Id}>
                     <Row className="align-items-center">
                       <Col md={7}>
-                        <Link to={`/product/${item.Id}`}>{item.ItemDesc}</Link>
+                        <Link to={`/product/${item.ItemCode}`}>
+                          {item.ItemDesc}
+                        </Link>
                       </Col>
                       <Col md={2}>
                         <span>{item.quantity}</span>

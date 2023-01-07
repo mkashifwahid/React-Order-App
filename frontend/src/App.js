@@ -42,7 +42,6 @@ function App() {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get('/api/products/categories');
-        console.log(data, 'ali raza');
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));
@@ -126,16 +125,16 @@ function App() {
               <strong>Companies</strong>
             </Nav.Item>
             {categories.map((category) => (
-              <Nav.Item key={category.Group_Code}>
+              <Nav.Item key={category.Cmp_Code}>
                 <LinkContainer
                   to={{
                     pathname: '/search',
                     hash: '#hash',
-                    search: `category=${category.Group_Code}`,
+                    search: `category=${category.Cmp_Code}`,
                   }}
                   onClick={() => setSidebarIsOpen(false)}
                 >
-                  <Nav.Link>{category.Group_Desc}</Nav.Link>
+                  <Nav.Link>{category.Cmp_Name}</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
             ))}

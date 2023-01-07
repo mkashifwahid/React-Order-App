@@ -22,7 +22,6 @@ export async function getSearchProducts(_companyCode, _itemName) {
     let products = await pool
       .request()
       .query(`exec sp_GetSearchItem '${_companyCode}', '${_itemName}'`);
-    console.log(products);
     return products;
   } catch (error) {
     console.log(error);
@@ -88,7 +87,6 @@ export async function addOrder(_customerCode, _bookerCode, ..._items) {
 }
 
 export async function getOrderById(_orderId) {
-  console.log('going to db for get order');
   try {
     let pool = await sql.connect(config);
     let order = await pool
@@ -99,7 +97,6 @@ export async function getOrderById(_orderId) {
       id: order.recordset[0].BknghID,
       order: order.recordset,
     };
-    console.log(returnData, 'recordset');
     return returnData;
   } catch (error) {
     console.log(error);

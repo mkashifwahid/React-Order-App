@@ -76,7 +76,6 @@ export default function SearchScreen() {
     fetchCategories();
   }, [dispatch]);
 
-  console.log(products);
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || page;
     const filterCategory = filter.category || category;
@@ -101,16 +100,16 @@ export default function SearchScreen() {
                   Any
                 </Link>
               </li>
-              {/* {categories.map((c) => (
-                <li key={c}>
+              {categories.map((c) => (
+                <li key={c.Cmp_Code}>
                   <Link
-                    className={c === category ? 'text-bold' : ''}
-                    to={getFilterUrl({ category: c })}
+                    className={c.Cmp_Code === category ? 'text-bold' : ''}
+                    to={getFilterUrl({ category: c.Cmp_Code })}
                   >
-                    {c}
+                    {c.Cmp_Name}
                   </Link>
                 </li>
-              ))} */}
+              ))}
             </ul>
           </div>
         </Col>
@@ -123,7 +122,7 @@ export default function SearchScreen() {
             <>
               <Row className="justify-content-between mb-3">
                 <Col md={6}>
-                  {/* <div>
+                  <div>
                     {countProducts === 0 ? 'No' : countProducts} Results
                     {query !== 'all' && ' : ' + query}
                     {category !== 'all' && ' : ' + category}
@@ -135,16 +134,16 @@ export default function SearchScreen() {
                         <i className="fas fa-times-circle"></i>
                       </Button>
                     ) : null}
-                  </div> */}
+                  </div>
                 </Col>
               </Row>
-              {/* {products.lenght === 0 && (
+              {products.lenght === 0 && (
                 <MessageBox>No Product Found</MessageBox>
-              )} */}
+              )}
               <Row>
                 {products.map((product) => (
-                  <Col sm={6} lg={4} className="mb-3" key={product.ItemCode}>
-                    {/* <Product>product={product}</Product> */}
+                  <Col sm={6} lg={4} className="mb-3" key={product.Id}>
+                    <Product product={product}></Product>
                   </Col>
                 ))}
               </Row>

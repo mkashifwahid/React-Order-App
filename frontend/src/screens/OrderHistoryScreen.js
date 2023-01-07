@@ -49,8 +49,6 @@ export default function OrderHistoryScreen() {
     fetchData();
   }, [userInfo]);
 
-  console.log(orders, 'wapis aya');
-
   return (
     <div>
       <Helmet>
